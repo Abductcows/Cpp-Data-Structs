@@ -91,17 +91,17 @@ namespace gb {
 
     template<class T>
     int Array<T>::size() const {
-        return 0;
+        return elements;
     }
 
     template<class T>
     int Array<T>::trueSize() const {
-        return 0;
+        return dataLength;
     }
 
     template<class T>
     bool Array<T>::isEmpty() const {
-        return false;
+        return elements == 0;
     }
 
     template<class T>
