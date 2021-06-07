@@ -116,14 +116,13 @@ namespace gb {
     };
 
     template<class T>
-    Array<T>::Array() : Array(DEFAULT_SIZE) {
-
+    Array<T>::Array() noexcept: Array(DEFAULT_SIZE) {
     }
 
     template<class T>
     Array<T>::Array(int initialCapacity) noexcept {
         if (initialCapacity < 0) {
-            initialCapacity = DEFAULT_SIZE
+            initialCapacity = DEFAULT_SIZE;
         }
 
         data = std::make_unique<T[]>(initialCapacity);
@@ -135,9 +134,9 @@ namespace gb {
     bool Array<T>::insert(int index, T const &element) noexcept {
         if (!indexLessThan(index, elements + 1) || !ensureCapacity()) return false;
 
-        std::memmove(data.get() + index + 1, data.get() + index, (elements - index) * sizeof(T);
+        std::memmove(data.get() + index + 1, data.get() + index, (elements - index) * sizeof(T));
         data[index] = element;
-
+        elements += 1;
         return true;
     }
 
@@ -159,7 +158,8 @@ namespace gb {
     bool Array<T>::remove(int index, T &result) noexcept {
         if (!indexLessThan(index, elements)) return false;
         result = data[index];
-        std::memmove(data.get() + index, data.get() + index + 1, (elements - index - 1) * sizeof(T))
+        std::memmove(data.get() + index, data.get() + index + 1, (elements - index - 1) * sizeof(T));
+        elements -= 1;
         return true;
     }
 
@@ -179,7 +179,7 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::resize(int newSize) {
+    bool Array<T>::resize(int newSize) noexcept {
         if (newSize < 0) {
             return false;
         }
@@ -205,7 +205,7 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::trimToSize() {
+    bool Array<T>::trimToSize() noexcept {
         if (dataLength == elements) {
             // (already trimmed)
             return true;
@@ -215,7 +215,7 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::ensureCapacity() {
+    bool Array<T>::ensureCapacity() noexcept {
         if (dataLength > elements) {
             return true; // not yet full
         }
@@ -224,7 +224,7 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::doubleSize() {
+    bool Array<T>::doubleSize() noexcept {
         if (dataLength == 0) {
             return resize(DEFAULT_SIZE);
         }
