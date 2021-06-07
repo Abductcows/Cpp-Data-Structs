@@ -24,18 +24,13 @@ int amain() {
         int element = rand() % N;
         cout << element << " ";
         heap.insert(element);
-        //maxh.insert(element);
     }
 
-    cout << endl << endl << "Size: = " << heap.size() << endl;
+    cout << endl << endl << "Size = " << heap.size() << endl;
     cout << "Allocated = " << heap.trueSize() << endl;
     cout << "\nExtractions:\n\n";
 
     extractAllAndPrint(heap);
-    extractAllAndPrint(heap);
-    gb::MinHeap<int> second(heap);
-    extractAllAndPrint(second);
-
     return 0;
 }
 
