@@ -142,7 +142,11 @@ namespace gb {
 
     template<class T>
     bool Array<T>::ensureCapacity() {
-        return false;
+        if (dataLength > elements) {
+            return true; // not yet full
+        }
+        // try to double size
+        return doubleSize();
     }
 
     template<class T>
