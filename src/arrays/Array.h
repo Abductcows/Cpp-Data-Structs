@@ -23,7 +23,7 @@ namespace gb {
 
         bool get(int index, T &result) const noexcept;
 
-        bool set(int index, T element) noexcept;
+        bool set(int index, T const &element) noexcept;
 
         bool remove(int index, T &result) noexcept;
 
@@ -89,8 +89,10 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::set(int index, T element) noexcept {
-        return false;
+    bool Array<T>::set(int index, T const &element) noexcept {
+        if (!indexLessThan(index, elements)) return false;
+        data[index] = element;
+        return true;
     }
 
     template<class T>
