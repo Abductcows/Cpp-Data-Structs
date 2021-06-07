@@ -8,7 +8,8 @@
 
 using namespace std;
 
-void extractAllAndPrint(gb::MinHeap<int> &heap);
+template <class T>
+void extractAllAndPrint(gb::MinHeap<T> &);
 
 int amain() {
     int N = 101;
@@ -26,25 +27,22 @@ int amain() {
         //maxh.insert(element);
     }
 
-    cout << endl << endl << "Sizes: MinHeap = " << heap.size()
-
-         //<< " MaxHeap = " << maxh.size()
-         << endl;
-
+    cout << endl << endl << "Size: = " << heap.size() << endl;
     cout << "Allocated = " << heap.trueSize() << endl;
-
     cout << "\nExtractions:\n\n";
-    extractAllAndPrint(heap);
-    extractAllAndPrint(heap);
 
+    extractAllAndPrint(heap);
+    extractAllAndPrint(heap);
     gb::MinHeap<int> second(heap);
     extractAllAndPrint(second);
+
     return 0;
 }
 
-void extractAllAndPrint(gb::MinHeap<int> &heap) {
+template <class T>
+void extractAllAndPrint(gb::MinHeap<T> &heap) {
     while (!heap.isEmpty()) {
-        int element = heap.extractRoot();
+        T element = heap.extractRoot();
         cout << element << " ";
     }
     cout << "\n\n";
