@@ -1,7 +1,3 @@
-//
-// Created by abduc on 6/7/2021.
-//
-
 #ifndef CPPDATASTRUCTS_ARRAY_H
 #define CPPDATASTRUCTS_ARRAY_H
 
@@ -13,7 +9,7 @@ namespace gb {
     template<class T>
     class Array {
     public:
-        Array();
+        Array() noexcept;
 
         explicit Array(int initialCapacity) noexcept;
 
@@ -48,10 +44,7 @@ namespace gb {
 
         bool doubleSize() noexcept;
 
-        bool indexLessThan(int index, int val);
-
-    private:
-
+        bool indexLessThan(int index, int val) const;
 
     };
 
@@ -75,7 +68,7 @@ namespace gb {
     bool Array<T>::insert(int index, T const &element) noexcept {
         if (!indexLessThan(index, elements + 1) || !ensureCapacity()) return false;
 
-        std::memmove(index + 1, index, (elements - index) * sizeof(T);
+        std::memmove(data.get() + index + 1, data.get() + index, (elements - index) * sizeof(T);
         data[index] = element;
 
         return true;
@@ -99,7 +92,7 @@ namespace gb {
     bool Array<T>::remove(int index, T &result) noexcept {
         if (!indexLessThan(index, elements)) return false;
         result = data[index];
-        std::memmove(index, index + 1, (elements - index - 1) * sizeof(T))
+        std::memmove(data.get() + index, data.get() + index + 1, (elements - index - 1) * sizeof(T))
         return true;
     }
 
@@ -172,7 +165,7 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::indexLessThan(int index, int val) {
+    bool Array<T>::indexLessThan(int index, int val) const {
         return 0 <= index && index < val;
     }
 
