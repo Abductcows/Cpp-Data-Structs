@@ -83,7 +83,9 @@ namespace gb {
 
     template<class T>
     bool Array<T>::get(int index, T &result) const noexcept {
-        return false;
+        if (!indexLessThan(index, elements)) return false;
+        result = data[index];
+        return true;
     }
 
     template<class T>
