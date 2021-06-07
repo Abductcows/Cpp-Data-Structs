@@ -147,7 +147,10 @@ namespace gb {
 
     template<class T>
     bool Array<T>::doubleSize() {
-        return false;
+        if (dataLength == 0) {
+            return resize(DEFAULT_SIZE);
+        }
+        return resize(2 * dataLength);
     }
 
 }
