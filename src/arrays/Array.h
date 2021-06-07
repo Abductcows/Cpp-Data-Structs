@@ -97,7 +97,10 @@ namespace gb {
 
     template<class T>
     bool Array<T>::remove(int index, T &result) noexcept {
-        return false;
+        if (!indexLessThan(index, elements)) return false;
+        result = data[index];
+        std::memmove(index, index + 1, (elements - index - 1) * sizeof(T))
+        return true;
     }
 
     template<class T>
