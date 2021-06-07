@@ -132,7 +132,12 @@ namespace gb {
 
     template<class T>
     bool Array<T>::trimToSize() {
-        return false;
+        if (dataLength == elements) {
+            // (already trimmed)
+            return true;
+        }
+
+        return resize(elements);
     }
 
     template<class T>
