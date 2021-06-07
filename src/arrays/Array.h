@@ -19,7 +19,7 @@ namespace gb {
 
         virtual ~Array() = default;
 
-        bool insert(T element) noexcept;
+        bool insert(int index, T const &element) noexcept;
 
         bool get(int index, T &result) const noexcept;
 
@@ -48,6 +48,8 @@ namespace gb {
 
         bool doubleSize() noexcept;
 
+        bool indexLessThan(int index, int val);
+
     private:
 
 
@@ -70,8 +72,13 @@ namespace gb {
     }
 
     template<class T>
-    bool Array<T>::insert(T element) noexcept {
-        return false;
+    bool Array<T>::insert(int index, T const &element) noexcept {
+        if (!indexLessThan(index, elements + 1) || !ensureCapacity()) return false;
+
+        std::memmove(index + 1, index, (elements - index) * sizeof(T);
+        data[index] = element;
+
+        return true;
     }
 
     template<class T>
@@ -155,6 +162,11 @@ namespace gb {
             return resize(DEFAULT_SIZE);
         }
         return resize(2 * dataLength);
+    }
+
+    template<class T>
+    bool Array<T>::indexLessThan(int index, int val) {
+        return 0 <= index && index < val;
     }
 
 }
